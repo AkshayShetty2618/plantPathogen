@@ -6,9 +6,12 @@ import pandas as pd
 
 class Preprocessing:
 
-    def __init__(self,path, isTrain):
-        self.path = path
+    def __init__(self,filePath, isTrain):
+        self.csvPath = filePath
+        self.inPath = r'G:\Kaggle\PlantPathology\train_images'
+        self.opPath = r'G:\Kaggle\PlantPathology\processed_image'
         if isTrain:
+            self.trainPre()
 
 
     def imagePreprocess(self, path):
@@ -26,7 +29,7 @@ class Preprocessing:
         ret, thresh_img = cv2.threshold(closing, 200, 255, cv2.THRESH_BINARY)
         contours, hierarchy = cv2.findContours(thresh_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-        imc = img.copy()
+        #imc = img.copy()
         ind = 0
         areaMax = 0
         cind = 0
@@ -44,4 +47,10 @@ class Preprocessing:
 
     def trainPre(self):
 
-        #read csv loop across the images, preprocess and save
+        df = pd.read_csv(self.csvPath)
+        for ind,row in df.iterrows():
+            imagePath = os.path.join(self.inPath,row['image'])
+            image = self.imagePreprocess(imagePath)
+            opImagePath = os.path.join(self.opPath,row['image'])
+            cv2.imwrite(opImagePath,image)
+

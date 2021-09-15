@@ -1,16 +1,18 @@
-from csvReader import cvsReader
+from csvReader import csvReader
 from Preprocessing import Preprocessing
 
 def editCSV():
     path = r'G:\Kaggle\PlantPathology\train.csv'
     opPath = r'G:\Kaggle\PlantPathology\upTrain.csv'
-    cvsReader.edit_csv(path, opPath)
+    csvReader(path,opPath)
+
 
 def preprocessImage():
-
-    Preprocessing(isTrain=True)
+    csvPath = r'G:\Kaggle\PlantPathology\upTrain.csv'
+    Preprocessing(csvPath, isTrain=True)
 
 
 if __name__ == '__main__':
-    editCSV()
+    #editCSV()
+    preprocessImage()
 

@@ -1,12 +1,17 @@
 import pandas as pd
 import numpy as np
 
-class cvsReader:
+class csvReader:
+    def __init__(self, path, opPath):
+        self.path = path
+        self.opPath = opPath
+        self.edit_csv()
 
-    def edit_csv(self, path, opPath):
+
+    def edit_csv(self):
 
         #path = r'G:\Kaggle\PlantPathology\train.csv'
-        data = pd.read_csv(path)
+        data = pd.read_csv(self.path)
         labels = data.labels.unique()
         n = 0
         for lab in labels:
@@ -59,5 +64,5 @@ class cvsReader:
         dataframe.insert(0, 'image', images, True)
 
         #path = r'G:\Kaggle\PlantPathology\upTrain.csv'
-        dataframe.to_csv(opPath, index=False)
+        dataframe.to_csv(self.opPath, index=False)
 
